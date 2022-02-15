@@ -1,0 +1,12 @@
+package java.lang;
+
+public interface Comparable<T> {
+
+    int compareTo(T);
+
+}
+
+public interface Comparator<T> {
+
+    public int compare(T o1, T o2);
+}

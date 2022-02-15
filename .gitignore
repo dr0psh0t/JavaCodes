@@ -1,0 +1,7 @@
+out/
+.idea/
+com/.DS_Store
+
+# IntelliJ related
+*.iml
+.DS_Store

@@ -1,0 +1,68 @@
+/ Raw collection type - don't do this!
+// My stamp collection. Contains only Stamp instances.
+private final Collection stamps = ... ;
+
+// Erroneous insertion of coin into stamp collection
+stamps.add(new Coin( ... )); // Emits "unchecked call" warning
+
+// Raw iterator type - don't do this!
+for (Iterator i = stamps.iterator(); i.hasNext(); )
+    Stamp stamp = (Stamp) i.next(); // Throws ClassCastException
+        stamp.cancel();
+
+// Use of raw type for unknown element type - don't do this!
+static int numElementsInCommon(Set s1, Set s2) {
+    int result = 0;
+    for (Object o1 : s1)
+        if (s2.contains(o1))
+        result++;
+    return result;
+}
+
+// Parameterized collection type - typesafe
+private final Collection<Stamp> stamps = ... ;
+
+// Fails at runtime - unsafeAdd method uses a raw type (List)!
+public static void main(String[] args) {
+    List<String> strings = new ArrayList<>();
+    unsafeAdd(strings, Integer.valueOf(42));
+    String s = strings.get(0); // Has compiler-generated cast
+}
+private static void unsafeAdd(List list, Object o) {
+    list.add(o);
+}
+
+Test.java:5: error: incompatible types: List<String> cannot be
+converted to List<Object>
+unsafeAdd(strings, Integer.valueOf(42));
+    ^
+
+// Use of raw type for unknown element type - don't do this!
+static int numElementsInCommon(Set s1, Set s2) {
+    int result = 0;
+    for (Object o1 : s1)
+        if (s2.contains(o1))
+            result++;
+    return result;
+}
+
+// Uses unbounded wildcard type - typesafe and flexible
+static int numElementsInCommon(Set<?> s1, Set<?> s2) { ... }
+
+// Legitimate use of raw type - instanceof operator
+if (o instanceof Set) { // Raw type
+    Set<?> s = (Set<?>) o; // Wildcard type
+    ...
+}
+
+Parameterized type      List<String>                Item 26
+Actual type parameter   String                      Item 26
+Generic type            List<E>                     Items 26, 29
+Formal type parameter   E                           Item 26
+Unbounded wildcard type List<?>                     Item 26
+Raw type                List                        Item 26
+Bounded type parameter  <E extends Number>          Item 29
+Recursive type bound    <T extends Comparable<T>>   Item 30
+Bounded wildcard type   List<? extends Number>      Item 31
+Generic method static   <E> List<E> asList(E[] a)   Item 30
+Type token              String.class                Item 33

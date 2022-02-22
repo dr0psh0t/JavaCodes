@@ -1,4 +1,4 @@
-package com.effectivejava.autocloseabletest;
+package com.effectivejava.createdestroyobjects.autocloseabletest;
 
 public class ResourceSample implements AutoCloseable {
 

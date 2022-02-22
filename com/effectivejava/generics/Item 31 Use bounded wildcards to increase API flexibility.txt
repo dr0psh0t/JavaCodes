@@ -1,0 +1,164 @@
+
+
+
+public class Stack<E> {
+    public Stack();
+    public void push(E e);
+    public E pop();
+    public boolean isEmpty();
+}
+Suppose we want to add a method that takes a sequence of elements and
+pushes them all onto the stack. Here’s a first attempt:
+// pushAll method without wildcard type - deficient!
+public void pushAll(Iterable<E> src) {
+    for (E e : src)
+    push(e);
+}
+
+    Stack<Number> numberStack = new Stack<>();
+    Iterable<Integer> integers = ... ;
+    numberStack.pushAll(integers);
+If you try it, however, you’ll get this error message because parameterized types
+are invariant:
+    StackTest.java:7: error: incompatible types: Iterable<Integer>
+    cannot be converted to Iterable<Number>
+        numberStack.pushAll(integers);
+                            ^
+
+Let’s modify pushAll to use this type:
+// Wildcard type for a parameter that serves as an E producer
+public void pushAll(Iterable<? extends E> src) {
+    for (E e : src)
+        push(e);
+}
+
+// popAll method without wildcard type - deficient!
+public void popAll(Collection<E> dst) {
+    while (!isEmpty())
+        dst.add(pop());
+}
+
+Stack<Number> numberStack = new Stack<Number>();
+Collection<Object> objects = ... ;
+numberStack.popAll(objects);
+
+Collection<Object> is not a subtype of Collection<Number>.
+
+// Wildcard type for parameter that serves as an E consumer
+public void popAll(Collection<? super E> dst) {
+    while (!isEmpty())
+        dst.add(pop());
+}
+
+With this change, both Stack and the client code compile cleanly.
+The lesson is clear. For maximum flexibility, use wildcard types on input
+parameters that represent producers or consumers.
+
+PECS stands for producer-extends, consumer-super.
+
+public Chooser(Collection<T> choices)
+
+// Wildcard type for parameter that serves as an T producer
+public Chooser(Collection<? extends T> choices)
+
+public static <E> Set<E> union(Set<E> s1, Set<E> s2)
+Both parameters, s1 and s2, are E producers, so the PECS mnemonic tells us that
+the declaration should be as follows:
+public static <E> Set<E> union(Set<? extends E> s1, Set<? extends E> s2)
+
+With the revised declaration, this code will compile cleanly:
+Set<Integer> integers = Set.of(1, 3, 5);
+Set<Double> doubles = Set.of(2.0, 4.0, 6.0);
+Set<Number> numbers = union(integers, doubles);
+
+If you try to compile the fragment in an
+earlier version of Java (with an appropriate replacement for the Set.of factory),
+you’ll get a long, convoluted error message like this:
+
+Union.java:14: error: incompatible types
+Set<Number> numbers = union(integers, doubles);
+                            ^
+    required: Set<Number>
+    found: Set<INT#1>
+    where INT#1,INT#2 are intersection types:
+        INT#1 extends Number,Comparable<? extends INT#2>
+        INT#2 extends Number,Comparable<?>
+
+Next let’s turn our attention to the max method in Item 30. Here is the original
+declaration:
+    public static <T extends Comparable<T>> T max(List<T> list)
+Here is a revised declaration that uses wildcard types:
+    public static <T extends Comparable<? super T>> T max(List<? extends T> list)
+
+The first uses an unbounded type parameter (Item 30) and the second an unbounded wildcard:
+// Two possible declarations for the swap method
+public static <E> void swap(List<E> list, int i, int j);
+public static void swap(List<?> list, int i, int j);
+
+
+////
+
+
+extends
+
+The wildcard declaration of List<? extends Number> foo3 means that any of these are legal assignments:
+
+List<? extends Number> foo3 = new ArrayList<Number>();  // Number "extends" Number (in this context)
+List<? extends Number> foo3 = new ArrayList<Integer>(); // Integer extends Number
+List<? extends Number> foo3 = new ArrayList<Double>();  // Double extends Number
+
+    Reading - Given the above possible assignments, what type of object are you guaranteed to read from List foo3:
+        You can read a Number because any of the lists that could be assigned to foo3 contain a Number or a subclass of Number.
+        You can't read an Integer because foo3 could be pointing at a List<Double>.
+        You can't read a Double because foo3 could be pointing at a List<Integer>.
+
+    Writing - Given the above possible assignments, what type of object could you add to List foo3 that would be legal for all the above possible ArrayList assignments:
+        You can't add an Integer because foo3 could be pointing at a List<Double>.
+        You can't add a Double because foo3 could be pointing at a List<Integer>.
+        You can't add a Number because foo3 could be pointing at a List<Integer>.
+
+You can't add any object to List<? extends T> because you can't guarantee what kind of List it is really pointing to, so you can't guarantee that the object is allowed in that List. The only "guarantee" is that you can only read from it and you'll get a T or subclass of T.
+super
+
+Now consider List <? super T>.
+
+The wildcard declaration of List<? super Integer> foo3 means that any of these are legal assignments:
+
+List<? super Integer> foo3 = new ArrayList<Integer>();  // Integer is a "superclass" of Integer (in this context)
+List<? super Integer> foo3 = new ArrayList<Number>();   // Number is a superclass of Integer
+List<? super Integer> foo3 = new ArrayList<Object>();   // Object is a superclass of Integer
+
+    Reading - Given the above possible assignments, what type of object are you guaranteed to receive when you read from List foo3:
+        You aren't guaranteed an Integer because foo3 could be pointing at a List<Number> or List<Object>.
+        You aren't guaranteed a Number because foo3 could be pointing at a List<Object>.
+        The only guarantee is that you will get an instance of an Object or subclass of Object (but you don't know what subclass).
+
+    Writing - Given the above possible assignments, what type of object could you add to List foo3 that would be legal for all the above possible ArrayList assignments:
+        You can add an Integer because an Integer is allowed in any of above lists.
+        You can add an instance of a subclass of Integer because an instance of a subclass of Integer is allowed in any of the above lists.
+        You can't add a Double because foo3 could be pointing at an ArrayList<Integer>.
+        You can't add a Number because foo3 could be pointing at an ArrayList<Integer>.
+        You can't add an Object because foo3 could be pointing at an ArrayList<Integer>.
+
+PECS
+
+Remember PECS: "Producer Extends, Consumer Super".
+
+    "Producer Extends" - If you need a List to produce T values (you want to read Ts from the list), you need to declare it with ? extends T, e.g. List<? extends Integer>. But you cannot add to this list.
+
+    "Consumer Super" - If you need a List to consume T values (you want to write Ts into the list), you need to declare it with ? super T, e.g. List<? super Integer>. But there are no guarantees what type of object you may read from this list.
+
+    If you need to both read from and write to a list, you need to declare it exactly with no wildcards, e.g. List<Integer>.
+
+Example
+
+Note this example from the Java Generics FAQ. Note how the source list src (the producing list) uses extends, and the destination list dest (the consuming list) uses super:
+
+public class Collections {
+  public static <T> void copy(List<? super T> dest, List<? extends T> src) {
+      for (int i = 0; i < src.size(); i++)
+        dest.set(i, src.get(i));
+  }
+}
+
+Also see How can I add to List<? extends Number> data structures?

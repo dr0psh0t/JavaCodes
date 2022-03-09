@@ -5,7 +5,7 @@ import java.util.Objects;
 public class RequrieNonNull {
     public static void main(String[] args) {
 
-        String param = "null";
+        String param = null;
         methodTest(param);
     }
 

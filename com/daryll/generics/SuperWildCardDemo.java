@@ -1,9 +1,7 @@
 package com.daryll.generics;
 
-public class SuperWildCardDemo
-{
-    public static void main(String[] args)
-    {
+public class SuperWildCardDemo {
+    public static void main(String[] args) {
         GenericStack<String> stack1 = new GenericStack<>();
         GenericStack<Object> stack2 = new GenericStack<>();
 
@@ -17,10 +15,8 @@ public class SuperWildCardDemo
     }
 
     //  in <? super T>, ? represents type T or a supertype of T. Object is a supertype of String.
-    public static <T> void add(GenericStack<T> stack1, GenericStack<? super T> stack2)
-    {
-        while (!stack1.isEmpty())
-        {
+    public static <T> void add(GenericStack<T> stack1, GenericStack<? super T> stack2) {
+        while (!stack1.isEmpty()) {
             stack2.push(stack1.pop());
         }
     }

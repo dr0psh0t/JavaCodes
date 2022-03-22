@@ -31,6 +31,7 @@ public class TestArbitraryObjectMethodReference {
         Collections.sort(numbers, (i1, i2) -> i1.compareTo(i2));
         numbers.forEach(System.out::println);
 
+        //  Using Method References
         Collections.sort(numbers, (Integer::compareTo));
         numbers.forEach(System.out::println);
     }

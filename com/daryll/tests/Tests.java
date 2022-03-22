@@ -3,7 +3,10 @@ package com.daryll.tests;
 public class Tests {
     public static void main(String[] args) {
 
-        int[] array = {5,2,4,6,1,3};
+        String name = "daryll";
+
+
+        //int[] array = {5,2,4,6,1,3};
 
         /*
         iterate from position 1 to the last position:
@@ -25,7 +28,8 @@ public class Tests {
                 i = i - 1
             A[i + 1] = key
          */
-        for (int currentIndex = 1; currentIndex < array.length; currentIndex++) {
+
+        /*for (int currentIndex = 1; currentIndex < array.length; currentIndex++) {
             int currentElement = array[currentIndex];
             int behindIndex = currentIndex - 1;
 
@@ -38,7 +42,7 @@ public class Tests {
 
         for (int e : array) {
             System.out.print(e+" ");
-        }
+        }*/
     }
 }
 

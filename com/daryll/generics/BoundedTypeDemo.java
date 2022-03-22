@@ -13,9 +13,7 @@ public class BoundedTypeDemo {
     }
 
     //  'E' is a generic subtype of GeometricObject. should only be bound to GeometricObject.
-    public static <E extends GeometricObject> boolean equalArea(
-            E object1, E object2) {
-
+    public static <E extends GeometricObject> boolean equalArea(E object1, E object2) {
         return object1.getArea() == object2.getArea();
     }
 }

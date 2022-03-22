@@ -1,9 +1,7 @@
 package com.daryll.generics;
 
-public class AnyWildCardDemo
-{
-    public static void main(String[] args)
-    {
+public class AnyWildCardDemo {
+    public static void main(String[] args) {
         GenericStack<Integer> intStack = new GenericStack<>();
 
         intStack.push(1);
@@ -14,10 +12,8 @@ public class AnyWildCardDemo
     }
 
     //  <?> is a wildcard that represents any object type. unbounded wildcard.
-    public static void print(GenericStack<?> stack)
-    {
-        while (!stack.isEmpty())
-        {
+    public static void print(GenericStack<?> stack) {
+        while (!stack.isEmpty()) {
             System.out.print(stack.pop() + " ");
         }
     }

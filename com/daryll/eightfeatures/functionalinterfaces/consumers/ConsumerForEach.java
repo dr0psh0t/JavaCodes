@@ -8,6 +8,7 @@ public class ConsumerForEach {
 
         List<String> words = Arrays.asList("falcon", "wood", "rock", "forest", "river", "water");
 
+        // forEach(Consumer<? super String> action)
         words.forEach(word -> System.out.println(word));
         words.forEach(System.out::println);
     }

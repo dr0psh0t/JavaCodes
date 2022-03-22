@@ -2,6 +2,8 @@ package com.daryll.eightfeatures.methodreferences;
 
 //  Method reference to a static method of a class
 
+import java.util.function.Predicate;
+
 interface A {
     boolean checkSingleDigit(int x);
 }

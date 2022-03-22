@@ -30,6 +30,11 @@ interface MyInterface2 {
 public class StaticMethod implements MyInterface2 {
 
     @Override
+    public void newMethod() {
+        System.out.println("newMethod() implemented");
+    }
+
+    @Override
     public void existingMethod(String str) {
         System.out.println("String is: "+str);
     }

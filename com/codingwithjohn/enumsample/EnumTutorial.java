@@ -14,5 +14,6 @@ public class EnumTutorial {
         }*/
 
         System.out.println(Cereals.FROOT_LOOPS.levelOfDeliciousness);
+        System.out.println(Cereals.FROOT_LOOPS);
     }
 }

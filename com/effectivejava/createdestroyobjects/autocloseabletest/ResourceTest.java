@@ -6,7 +6,7 @@ public class ResourceTest {
         try (ResourceSample resourceSample = new ResourceSample()) {
             resourceSample.doWork();
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 }

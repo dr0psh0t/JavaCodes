@@ -3,7 +3,8 @@ package com.daryll.tests;
 public class Tests {
     public static void main(String[] args) {
 
-        String name = "daryll";
+        Elvis elvis = Elvis.getInstance();
+        elvis.leaveTheBuilding();
 
 
         //int[] array = {5,2,4,6,1,3};

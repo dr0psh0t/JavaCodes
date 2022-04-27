@@ -1,7 +1,6 @@
 package com.daryll.eightfeatures.functionalinterfaces;
 
 import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 
 /*
 Interface BinaryOperator<T>
@@ -26,10 +25,10 @@ Interface BinaryOperator<T>
 
     This is a functional interface whose functional method is BiFunction.apply(Object, Object).
  */
-public class BinaryOperatorInterfaceConcept {
+public class BinaryOperatorTest {
     public static void main(String[] args) {
 
-        BinaryOperator<Integer> sumOfTwoNumbers1 = (x1, x2) -> x1 + x2;
+        java.util.function.BinaryOperator<Integer> sumOfTwoNumbers1 = (x1, x2) -> x1 + x2;
         // or BinaryOperator<Integer> sum = Integer::sum;
 
         int sum = sumOfTwoNumbers1.apply(10, 20);

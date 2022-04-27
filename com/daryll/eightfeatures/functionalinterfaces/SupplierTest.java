@@ -23,7 +23,7 @@ Interface Supplier<T>
 
     This is a functional interface whose functional method is get().
  */
-public class SupplierInterfaceConcept {
+public class SupplierTest {
     public static void main(String[] args) {
 
         supplierDemo(() -> "Java");

@@ -19,8 +19,11 @@ public class ListRemoveIf {
 
         Predicate<String> hasThreeChars = word -> word.length() == 3;
         words.removeIf(hasThreeChars);
+
         System.out.println(words);
         System.out.println(words.size());
+
+        System.out.println(hasThreeChars.test("Dar"));
     }
 }
 /*

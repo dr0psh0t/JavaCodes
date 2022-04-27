@@ -23,7 +23,7 @@ Interface Predicate<T>
 
     This is a functional interface whose functional method is test(Object).
  */
-public class PredicateInterfaceConcept {
+public class PredicateTest {
     public static void main(String[] args) {
 
         Predicate<Integer> getTimesFive = x -> x > 5;

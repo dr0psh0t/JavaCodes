@@ -1,4 +1,4 @@
-package com.daryll.eightfeatures.functionalinterfaces.consumers.andthenex;
+package com.daryll.eightfeatures.functionalinterfaces.consumers;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -8,8 +8,8 @@ import java.util.function.Consumer;
 
 public class Sample {
 
-    private static RoundingMode ROUNDING_MODE = RoundingMode.HALF_DOWN;
-    private static int DECIMALS = 2;
+    private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_DOWN;
+    private static final int DECIMALS = 2;
 
     public static void main(String[] args) {
 
@@ -34,6 +34,37 @@ public class Sample {
     private static void process(List<Product> data, Consumer<Product> cons) {
         for (Product e : data) {
             cons.accept(e);
+        }
+    }
+
+    private static class Product {
+        private String name;
+        private BigDecimal price;
+
+        public Product(String name, BigDecimal price) {
+            this.name = name;
+            this.price = price;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public BigDecimal getPrice() {
+            return price;
+        }
+
+        public void setPrice(BigDecimal price) {
+            this.price = price;
+        }
+
+        @Override
+        public String toString() {
+            return "Product{" + "name='" + name + '\'' + ", price=" + price + '}';
         }
     }
 }

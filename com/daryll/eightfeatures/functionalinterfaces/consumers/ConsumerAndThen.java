@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 //  operation. In the example, we add value 2 to each of the elements
 //  in the list and then we print all the elements.
 
-public class ConsumerandThen {
+public class ConsumerAndThen {
     public static void main(String[] args) {
 
         ArrayList<Integer> vals = new ArrayList<>();
@@ -26,7 +26,7 @@ public class ConsumerandThen {
 
         Consumer<List<Integer>> showList = list -> list.forEach(System.out::println);
 
-        addTwo.andThen(showList).accept(vals);
+        //addTwo.andThen(showList).accept(vals);
         //  or
         addTwo.accept(vals);
         vals.forEach(System.out::println);

@@ -2,7 +2,7 @@ package com.daryll.eightfeatures.functionalinterfaces;
 
 import java.util.function.Function;
 
-public class FunctionInterfaceConcept {
+public class FunctionTest {
     public static void main(String[] args) {
 
         /*

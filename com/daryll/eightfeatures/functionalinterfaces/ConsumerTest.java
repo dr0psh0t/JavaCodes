@@ -25,7 +25,7 @@ Interface Consumer<T>
 
     This is a functional interface whose functional method is accept(Object).
  */
-public class ConsumerInterfaceConcept {
+public class ConsumerTest {
     public static void main(String[] args) {
 
         Consumer<String> print = x -> System.out.println(x);

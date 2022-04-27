@@ -29,7 +29,7 @@ Interface UnaryOperator<T>
 
     This is a functional interface whose functional method is Function.apply(Object).
  */
-public class UnaryOperatorInterfaceConcept {
+public class UnaryOperatorTest {
     public static void main(String[] args) {
 
         UnaryOperator<Integer> getTimesSevenOfNumber = x -> x * 7;
